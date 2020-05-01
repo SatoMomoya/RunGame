@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\UserData\ST_CreateUserdata.cs" />
+    <Compile Include="Assets\Scripts\UserData\ST_UserData.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\UnityChanAssets\Animations\Rotator.cs" />
     <Compile Include="Assets\UnityChanAssets\Post Effect Mask\Scripts\PostEffectMask.cs" />
