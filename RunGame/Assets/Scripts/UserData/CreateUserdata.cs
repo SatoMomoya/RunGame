@@ -5,7 +5,9 @@ using System.IO;
 
 public class CreateUserdata : MonoBehaviour
 {
-    UserData _userData = new UserData();
+    UserData _userData = UserData.GetInstance();
+    //ファイル名
+    string _fileName = "UserData.json";
 
     /// <summary>
     /// 最初にユーザーデータを作成する
@@ -24,7 +26,7 @@ public class CreateUserdata : MonoBehaviour
         Debug.Log(json);
         StreamWriter writer;
 
-        writer = new StreamWriter(Application.streamingAssetsPath + "/UserData.json", false);
+        writer = new StreamWriter(Application.streamingAssetsPath + "/" + _fileName, false);
         writer.Write(json);
         writer.Flush();
         writer.Close();

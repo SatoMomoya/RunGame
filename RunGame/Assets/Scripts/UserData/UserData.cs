@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UserData
+public sealed class UserData
 {
+    private static UserData _userData = new UserData();
+
     //ユーザーの番号
     public string _userNumber;
     //ユーザーID
@@ -19,4 +21,20 @@ public class UserData
     public int _userPlaycount;
     //ユーザーの最終ログイン日
     public string _userLastloginDate;
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    private UserData()
+    {
+
+    }
+    /// <summary>
+    /// インスタンス関数
+    /// </summary>
+    /// <returns>_userData</returns>
+    public static UserData GetInstance()
+    {
+        return _userData;
+    }
+
 }
