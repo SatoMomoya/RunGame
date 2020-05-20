@@ -6,8 +6,11 @@ public sealed class GamePlay
 {
     private static GamePlay _game = new GamePlay();
     //ゲーム速度
-    public float _gameSpeed;
-    
+    public float _gameSpeed = 1.0f;
+    //生成スパン
+    [SerializeField]
+    public float _generationObstacleTime = 5.0f;
+    //
     /// <summary>
     /// コンストラクタ
     /// </summary>
