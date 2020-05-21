@@ -18,6 +18,10 @@ public class PlayerMovementControl : MonoBehaviour
     //重力
     [SerializeField]
     private float _gravity = 10.0f;
+    //プレイヤーが障害物に当たったか確認するフラグ
+    [SerializeField]
+    private bool _isHitObstacle = false;
+
 
     void Start()
     {
@@ -27,6 +31,12 @@ public class PlayerMovementControl : MonoBehaviour
 
     void Update()
     {   
+        //衝突フラグがtrueならプレイヤー衝突状態に変更
+        if(_isHitObstacle == true)
+        {
+            _playerState = PlayerState.PlayerStates.PLAYER_IS_HIT_OBSTACLE;
+        }
+
         //プレイヤーの状態によって処理を変更する
         switch(_playerState)
         {
@@ -69,10 +79,29 @@ public class PlayerMovementControl : MonoBehaviour
         }
     }
     /// <summary>
-    /// プレイヤーが
+    /// プレイヤーが障害物に当たった時の関数
     /// </summary>
     public void PlayerIsHitObstacle()
     {
 
     }
+    /// <summary>
+    /// プレイヤーとの当たり判定
+    /// </summary>
+    /// <param name="other">オブジェクト</param>
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Obstacle":
+                _isHitObstacle = true;        //プレイヤーのステートを衝突状態に変更
+                break;
+            case "Coin":
+
+                break;
+          
+        }
+
+    }
+
 }
