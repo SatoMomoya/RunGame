@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovementControl : MonoBehaviour
 {
+    //ゲームプレイ情報  
+    GamePlay _gamePlay;
     //プレイヤーの状態
     [SerializeField]
     private PlayerState.PlayerStates _playerState = PlayerState.PlayerStates.PLAYER_IS_RUNNING;
@@ -21,10 +23,24 @@ public class PlayerMovementControl : MonoBehaviour
     //プレイヤーが障害物に当たったか確認するフラグ
     [SerializeField]
     private bool _isHitObstacle = false;
-
+    //ノックバックスピード
+    [SerializeField]
+    private float _knockBackSpeed = -1.0f;
+    //スコア(int)
+    [SerializeField]
+    private int _scoreInt = 0;
+    //スコア(float)
+    [SerializeField]
+    private float _scoreFloat = 0.0f;
+    //一秒間に得られるスコア
+    [SerializeField]
+    private float _scorePerSecond = 100.0f;
 
     void Start()
     {
+        //ゲームプレイ情報を取得
+        _gamePlay =  GamePlay.GetInstance();
+        //キャラクターコントローラーを取得
         _controller = GetComponent<CharacterController>();
         
     }
@@ -35,6 +51,13 @@ public class PlayerMovementControl : MonoBehaviour
         if(_isHitObstacle == true)
         {
             _playerState = PlayerState.PlayerStates.PLAYER_IS_HIT_OBSTACLE;
+        }
+
+        //プレイヤーが障害物に当たっていなければスコアを加算する
+        if(_playerState != PlayerState.PlayerStates.PLAYER_IS_HIT_OBSTACLE)
+        {
+            _scoreFloat += Time.deltaTime * _scorePerSecond;
+            _scoreInt = (int)_scoreFloat;
         }
 
         //プレイヤーの状態によって処理を変更する
@@ -83,7 +106,16 @@ public class PlayerMovementControl : MonoBehaviour
     /// </summary>
     public void PlayerIsHitObstacle()
     {
+        if(_knockBackSpeed < 0.0f)
+        {
+            _knockBackSpeed += Time.deltaTime;
+        }
+        else
+        {
+            _knockBackSpeed = 0.0f;
+        }
 
+        _gamePlay._gameSpeed = _knockBackSpeed;
     }
     /// <summary>
     /// プレイヤーとの当たり判定
@@ -102,6 +134,18 @@ public class PlayerMovementControl : MonoBehaviour
           
         }
 
+    }
+
+    /// <summary>
+    /// スコア(int)を取得するプロパティ
+    /// </summary>
+    public int GetScoreInt
+    { 
+        get { return _scoreInt; }
+    }
+    public float GetScoreFloat
+    {
+        get { return _scoreFloat; }
     }
 
 }
